@@ -1,9 +1,37 @@
 import server from '../dist/server/server.js';
 
-export const config = {
-  runtime: 'edge',
-};
+export default async function handler(req, res) {
+  try {
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers.host;
+    const url = new URL(req.url, `${protocol}://${host}`);
 
-export default async function handler(request) {
-  return server.fetch(request);
+    const webReq = new Request(url, {
+      method: req.method,
+      headers: req.headers,
+      body: req.method !== 'GET' && req.method !== 'HEAD' ? req : undefined,
+      duplex: 'half'
+    });
+
+    const response = await server.fetch(webReq);
+
+    res.statusCode = response.status;
+    response.headers.forEach((value, key) => {
+      res.setHeader(key, value);
+    });
+
+    if (response.body) {
+      const reader = response.body.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        res.write(value);
+      }
+    }
+    res.end();
+  } catch (error) {
+    console.error('Server Error:', error);
+    res.statusCode = 500;
+    res.end('Internal Server Error');
+  }
 }
