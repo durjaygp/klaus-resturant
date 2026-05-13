@@ -250,6 +250,61 @@ export const products: Product[] = [
     rating: 4.9,
     ingredients: ['Espresso', 'Mascarpone', 'Cacao'],
     origin: 'Clásico Italiano'
+  },
+  {
+    id: 'p21',
+    name: 'Affogato de Avellana',
+    description: 'Espresso caliente vertido sobre gelato de vainilla artesanal y praliné de avellana.',
+    price: 145.00,
+    image: 'https://images.unsplash.com/photo-1594631252845-29fc4586c562',
+    category: 'Postres',
+    rating: 4.9,
+    ingredients: ['Espresso', 'Gelato de Vainilla', 'Avellana'],
+    origin: 'Piamonte'
+  },
+  {
+    id: 'p22',
+    name: 'Chai Latte de Cardamomo',
+    description: 'Infusión artesanal de té negro con especias exóticas, cardamomo fresco y leche vaporizada.',
+    price: 135.00,
+    image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3',
+    category: 'Té',
+    rating: 4.8,
+    ingredients: ['Té Negro', 'Cardamomo', 'Especias'],
+    origin: 'India'
+  },
+  {
+    id: 'p23',
+    name: 'Jugo de Pitaya y Chía',
+    description: 'Pitaya rosa fresca mezclada con semillas de chía hidratadas y agua de coco.',
+    price: 185.00,
+    image: 'https://images.unsplash.com/photo-1502741224143-90386d7f8c82',
+    category: 'Jugos',
+    rating: 4.7,
+    ingredients: ['Pitaya', 'Semillas de Chía', 'Agua de Coco'],
+    origin: 'Yucatán'
+  },
+  {
+    id: 'p24',
+    name: 'Sandwich de Roast Beef',
+    description: 'Roast beef premium con chimichurri casero, rúcula y queso provolone en pan de centeno.',
+    price: 350.00,
+    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8',
+    category: 'Bocadillos',
+    rating: 4.8,
+    ingredients: ['Roast Beef', 'Chimichurri', 'Pan de Centeno'],
+    origin: 'Corte Premium'
+  },
+  {
+    id: 'p25',
+    name: 'Mousse de Maracuyá',
+    description: 'Textura ligera y aireada de maracuyá tropical con una base de galleta de mantequilla.',
+    price: 155.00,
+    image: 'https://images.unsplash.com/photo-1519915028121-7d3463d20b13',
+    category: 'Postres',
+    rating: 4.9,
+    ingredients: ['Maracuyá', 'Crema', 'Mantequilla'],
+    origin: 'Trópico'
   }
 ]
 
