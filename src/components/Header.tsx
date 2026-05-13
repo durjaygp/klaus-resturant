@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/solid-store'
+import { Link } from '@tanstack/solid-router'
 import { createSignal, onMount, onCleanup, Show } from 'solid-js'
 import { cartStore, toggleCart, updateQuantity, removeFromCart } from '../lib/cart-store'
 
@@ -27,25 +28,26 @@ export default function Header() {
         }`}
       >
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12 flex items-center justify-between">
-          <a href="/" class="flex items-center gap-3 text-2xl font-bold tracking-tight">
+          <Link to="/" class="flex items-center gap-3 text-2xl font-bold tracking-tight">
             <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-orange to-orange-600 text-white flex items-center justify-center shadow-orange transform hover:rotate-12 transition-transform duration-300">
               <i class="fa-solid fa-utensils text-sm"></i>
             </div>
             <span class="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">Foodie</span>
-          </a>
+          </Link>
 
           <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-500">
             {[
               { label: 'Inicio', path: '/' },
               { label: 'Menú', path: '/menu' },
+              { label: 'Recetas', path: '/recipes' },
               { label: 'Reseñas', path: '/reviews' },
               { label: 'Blog', path: '/blog' },
               { label: 'Contacto', path: '/contact' }
             ].map((item) => (
-              <a href={item.path} class="hover:text-brand-orange transition-colors relative group">
+              <Link to={item.path} class="hover:text-brand-orange transition-colors relative group">
                 {item.label}
                 <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all duration-300 group-hover:w-full rounded-full"></span>
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -61,9 +63,9 @@ export default function Header() {
               </Show>
             </button>
             
-            <a href="/login" class="bg-gray-900 text-white px-6 py-2.5 rounded-full font-medium hover:bg-gray-800 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm hidden sm:block shadow-md">
+            <Link to="/login" class="bg-gray-900 text-white px-6 py-2.5 rounded-full font-medium hover:bg-gray-800 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm hidden sm:block shadow-md">
               Iniciar Sesión
-            </a>
+            </Link>
           </div>
         </div>
       </header>
@@ -117,9 +119,9 @@ export default function Header() {
             <span class="font-bold text-xl text-gray-900">Total</span>
             <span class="font-bold text-3xl text-brand-orange">${cartTotal() > 0 ? (cartTotal() + 100).toFixed(2) : '0.00'} MXN</span>
           </div>
-          <a href="/cart" onClick={() => cartTotal() === 0 ? null : toggleCart()} class={`block text-center w-full py-5 rounded-2xl font-bold transition-all duration-300 text-lg ${cartTotal() > 0 ? 'bg-gray-900 text-white hover:bg-black hover:shadow-2xl hover:-translate-y-1' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}>
+          <Link to="/cart" onClick={() => cartTotal() === 0 ? null : toggleCart()} class={`block text-center w-full py-5 rounded-2xl font-bold transition-all duration-300 text-lg ${cartTotal() > 0 ? 'bg-gray-900 text-white hover:bg-black hover:shadow-2xl hover:-translate-y-1' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}>
             Proceder al Pago
-          </a>
+          </Link>
         </div>
       </div>
     </>

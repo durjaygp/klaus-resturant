@@ -11,4 +11,7 @@ export default defineConfig({
     tanstackStart(),
     solidPlugin({ ssr: true }),
   ],
+  ssr: {
+    noExternal: true,
+  },
 })

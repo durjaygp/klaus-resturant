@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as RecipesRouteImport } from './routes/recipes'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DurjayRouteImport } from './routes/durjay'
@@ -19,6 +20,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RecipesIdRouteImport } from './routes/recipes.$id'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 import { Route as ExampleChatRouteImport } from './routes/example.chat'
 import { Route as DemoStoreRouteImport } from './routes/demo.store'
@@ -31,6 +33,11 @@ const ReviewsRoute = ReviewsRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesRoute = RecipesRouteImport.update({
+  id: '/recipes',
+  path: '/recipes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -73,6 +80,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesIdRoute = RecipesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => RecipesRoute,
+} as any)
 const ProductIdRoute = ProductIdRouteImport.update({
   id: '/product/$id',
   path: '/product/$id',
@@ -98,11 +110,13 @@ export interface FileRoutesByFullPath {
   '/durjay': typeof DurjayRoute
   '/login': typeof LoginRoute
   '/menu': typeof MenuRoute
+  '/recipes': typeof RecipesRouteWithChildren
   '/register': typeof RegisterRoute
   '/reviews': typeof ReviewsRoute
   '/demo/store': typeof DemoStoreRoute
   '/example/chat': typeof ExampleChatRoute
   '/product/$id': typeof ProductIdRoute
+  '/recipes/$id': typeof RecipesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -113,11 +127,13 @@ export interface FileRoutesByTo {
   '/durjay': typeof DurjayRoute
   '/login': typeof LoginRoute
   '/menu': typeof MenuRoute
+  '/recipes': typeof RecipesRouteWithChildren
   '/register': typeof RegisterRoute
   '/reviews': typeof ReviewsRoute
   '/demo/store': typeof DemoStoreRoute
   '/example/chat': typeof ExampleChatRoute
   '/product/$id': typeof ProductIdRoute
+  '/recipes/$id': typeof RecipesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -129,11 +145,13 @@ export interface FileRoutesById {
   '/durjay': typeof DurjayRoute
   '/login': typeof LoginRoute
   '/menu': typeof MenuRoute
+  '/recipes': typeof RecipesRouteWithChildren
   '/register': typeof RegisterRoute
   '/reviews': typeof ReviewsRoute
   '/demo/store': typeof DemoStoreRoute
   '/example/chat': typeof ExampleChatRoute
   '/product/$id': typeof ProductIdRoute
+  '/recipes/$id': typeof RecipesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -146,11 +164,13 @@ export interface FileRouteTypes {
     | '/durjay'
     | '/login'
     | '/menu'
+    | '/recipes'
     | '/register'
     | '/reviews'
     | '/demo/store'
     | '/example/chat'
     | '/product/$id'
+    | '/recipes/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -161,11 +181,13 @@ export interface FileRouteTypes {
     | '/durjay'
     | '/login'
     | '/menu'
+    | '/recipes'
     | '/register'
     | '/reviews'
     | '/demo/store'
     | '/example/chat'
     | '/product/$id'
+    | '/recipes/$id'
   id:
     | '__root__'
     | '/'
@@ -176,11 +198,13 @@ export interface FileRouteTypes {
     | '/durjay'
     | '/login'
     | '/menu'
+    | '/recipes'
     | '/register'
     | '/reviews'
     | '/demo/store'
     | '/example/chat'
     | '/product/$id'
+    | '/recipes/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,6 +216,7 @@ export interface RootRouteChildren {
   DurjayRoute: typeof DurjayRoute
   LoginRoute: typeof LoginRoute
   MenuRoute: typeof MenuRoute
+  RecipesRoute: typeof RecipesRouteWithChildren
   RegisterRoute: typeof RegisterRoute
   ReviewsRoute: typeof ReviewsRoute
   DemoStoreRoute: typeof DemoStoreRoute
@@ -213,6 +238,13 @@ declare module '@tanstack/solid-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes': {
+      id: '/recipes'
+      path: '/recipes'
+      fullPath: '/recipes'
+      preLoaderRoute: typeof RecipesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -271,6 +303,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recipes/$id': {
+      id: '/recipes/$id'
+      path: '/$id'
+      fullPath: '/recipes/$id'
+      preLoaderRoute: typeof RecipesIdRouteImport
+      parentRoute: typeof RecipesRoute
+    }
     '/product/$id': {
       id: '/product/$id'
       path: '/product/$id'
@@ -295,6 +334,17 @@ declare module '@tanstack/solid-router' {
   }
 }
 
+interface RecipesRouteChildren {
+  RecipesIdRoute: typeof RecipesIdRoute
+}
+
+const RecipesRouteChildren: RecipesRouteChildren = {
+  RecipesIdRoute: RecipesIdRoute,
+}
+
+const RecipesRouteWithChildren =
+  RecipesRoute._addFileChildren(RecipesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -304,6 +354,7 @@ const rootRouteChildren: RootRouteChildren = {
   DurjayRoute: DurjayRoute,
   LoginRoute: LoginRoute,
   MenuRoute: MenuRoute,
+  RecipesRoute: RecipesRouteWithChildren,
   RegisterRoute: RegisterRoute,
   ReviewsRoute: ReviewsRoute,
   DemoStoreRoute: DemoStoreRoute,
